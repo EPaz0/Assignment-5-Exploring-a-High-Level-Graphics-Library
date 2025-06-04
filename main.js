@@ -28,13 +28,13 @@ function main() {
     camera.position.set(0, 2, 5);
 
   //Camera controls
-    // const controls = new FirstPersonControls(camera, renderer.domElement);
-    // controls.lookSpeed = 0.1;    // mouse sensitivity
-    // controls.movementSpeed = 5;  // movement speed
-    // controls.lookVertical = true;  // enable looking up/down
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0, 0);
-    controls.update();
+    const controls = new FirstPersonControls(camera, renderer.domElement);
+    controls.lookSpeed = 0.1;    // mouse sensitivity
+    controls.movementSpeed = 5;  // movement speed
+    controls.lookVertical = true;  // enable looking up/down
+    // const controlssd = new OrbitControls(camera, renderer.domElement);
+    // controls.target.set(0, 0, 0);
+    // controls.update();
 
 
   const scene = new THREE.Scene();
@@ -139,53 +139,16 @@ function main() {
 
     // 3.  Create a cube and place it
     const johnCube = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),   // size‑1 cube
+        new THREE.BoxGeometry(2, 2, 2),   // size‑1 cube
         johnMat
     );
-    johnCube.position.set(0, 0.05, 0);     // y = 0.5 so it sits on ground
+    johnCube.position.set(0, .5, 0);     // y = 0.5 so it sits on ground
     johnCube.castShadow    = true;
     johnCube.receiveShadow = true;
 
     scene.add(johnCube);
 
-
-
-  // ——————————————————————————————————————————————
-  //  5) LOAD T-REX OBJ
-  // ——————————————————————————————————————————————
-  
-//   objLoader.load(
-//     'Model/T-Rex Model.obj',
-//     (root) => {
-//       // The OBJ usually comes in as a `Group` containing one or more Meshes.
-//       // We’ll traverse and replace each mesh’s material so it’s visible under our lights:
-//       root.traverse((child) => {
-//         if (child.isMesh) {
-//           // give it a simple gray, lit material
-//           child.material = new THREE.MeshStandardMaterial({
-//             color: 0x999999,
-//             roughness: 0.6,
-//             metalness: 0.1,
-//           });
-//           child.castShadow = true;
-//           child.receiveShadow = true;
-//         }
-//       });
-
-//       // scale + position so it sits on our ground
-//       root.scale.set(0.02, 0.02, 0.02);  // (adjust until it looks reasonable)
-//       root.position.set(0, -2.1, 0);
-//       scene.add(root);
-//     },
-//     (xhr) => {
-//       // (optional) progress callback
-//       // console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-//     },
-//     (err) => {
-//       console.error('T-Rex OBJ load error:', err);
-//     }
-//   );
-
+//Trexs
 gltfLoader.load('Model/t_rex_game_ready.glb', (gltf) => {
 
     
@@ -204,6 +167,22 @@ gltfLoader.load('Model/t_rex_game_ready.glb', (gltf) => {
         // rexA.rotateY(Math.PI);           // 180° flip if needed
         scene.add(rexA);
 
+         //baby rexs
+        const rexA2 = rex.clone(true);    // deep‑clone children + materials
+        rexA2.scale.set(3, 3, 3);            // same scale you used before
+        rexA2.position.set(-7, 2,  4);       // choose any (x,y,z)
+        rexA2.lookAt(0, rexA2.position.y, -8); // face centre
+        // rexA.rotateY(Math.PI);           // 180° flip if needed
+        scene.add(rexA2);
+
+        const rexA3 = rex.clone(true);    // deep‑clone children + materials
+        rexA3.scale.set(3, 3, 3);            // same scale you used before
+        rexA3.position.set(-7, 2,  -4);       // choose any (x,y,z)
+        rexA3.lookAt(0, rexA3.position.y, -5); // face centre
+        // rexA.rotateY(Math.PI);           // 180° flip if needed
+        scene.add(rexA3);
+        
+
         /* ---------- 2nd copy -------------------------------------------------- */
         const rexB = rex.clone(true);
         rexB.scale.set(6, 6, 6);
@@ -219,6 +198,24 @@ gltfLoader.load('Model/t_rex_game_ready.glb', (gltf) => {
         // Instead of lookAt you can set a heading directly (in radians):
         rexC.rotation.y = Math.PI * 0.25;   // 45° clockwise
         scene.add(rexC);
+
+
+        const rexD = rex.clone(true);
+        rexD.scale.set(6, 6, 6);
+        rexD.position.set(0, 4, 9);
+
+        // Instead of lookAt you can set a heading directly (in radians):
+        rexD.rotation.y = Math.PI * 1.2;   // 45° clockwise
+        scene.add(rexD);
+
+
+        const rexD2 = rex.clone(true);
+        rexD2.scale.set(2, 2, 2);
+        rexD2.position.set(0, 1, 5);
+
+        // Instead of lookAt you can set a heading directly (in radians):
+        rexD2.rotation.y = Math.PI * 1.25;   // 45° clockwise
+        scene.add(rexD2);
          });
     // ——————————————————————————————————————————————
     // 5.5) LOAD TREE OBJ + MTL
